@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CAVE>
+  <Sensor>
+    <Pos.X>-0.1111323</Pos.X>
+    <Pos.Y>2.13021</Pos.Y>
+    <Pos.Z>1.353099</Pos.Z>
+    <Rot.Y>-180</Rot.Y>
+    <Rot.X>19.16062</Rot.X>
+    <Rot.Z>359.6317</Rot.Z>
+  </Sensor>
+  <Projectors>
+    <Projector>
+      <Pos.X>0.07511</Pos.X>
+      <Pos.Y>2.284</Pos.Y>
+      <Pos.Z>0.3652</Pos.Z>
+      <Rot.Y>0</Rot.Y>
+      <Rot.X>0</Rot.X>
+      <Rot.Z>0</Rot.Z>
+      <Fy>-1.2</Fy>
+      <FOV>90</FOV>
+      <Display>1</Display>
+    </Projector>
+    <Projector>
+      <Pos.X>0.40688</Pos.X>
+      <Pos.Y>2.31988</Pos.Y>
+      <Pos.Z>0</Pos.Z>
+      <Rot.Y>270</Rot.Y>
+      <Rot.X>0</Rot.X>
+      <Rot.Z>0.8857</Rot.Z>
+      <Fy>-1.2</Fy>
+      <FOV>61.911</FOV>
+      <Display>2</Display>
+    </Projector>
+    <Projector>
+      <Pos.X>-0.445</Pos.X>
+      <Pos.Y>2.23244</Pos.Y>
+      <Pos.Z>0</Pos.Z>
+      <Rot.Y>90</Rot.Y>
+      <Rot.X>-1.8645</Rot.X>
+      <Rot.Z>1.3986</Rot.Z>
+      <Fy>-1.2</Fy>
+      <FOV>61.911</FOV>
+      <Display>3</Display>
+    </Projector>
+    <Projector>
+      <Pos.X>-0.11137</Pos.X>
+      <Pos.Y>2.4</Pos.Y>
+      <Pos.Z>0.02103</Pos.Z>
+      <Rot.Y>0</Rot.Y>
+      <Rot.X>66.06</Rot.X>
+      <Rot.Z>0.2331</Rot.Z>
+      <Fy>-1.2</Fy>
+      <FOV>61.911</FOV>
+      <Display>4</Display>
+    </Projector>
+  </Projectors>
+  <Surfaces>
+    <Surface>
+      <!-- Front Wall -->
+      <Pos.X>0</Pos.X>
+      <Pos.Y>1.05</Pos.Y>
+      <Pos.Z>1.4</Pos.Z>
+      <Rot.X>-90</Rot.X>
+      <Rot.Y>0</Rot.Y>
+      <Rot.Z>0</Rot.Z>
+      <Size.X>2.8</Size.X> <!-- Width -->
+      <Size.Y>0.01</Size.Y>
+      <Size.Z>2.1</Size.Z><!-- Height -->
+      <Display>1</Display>
+    </Surface>
+    <Surface>
+      <!-- Left Wall -->
+      <Pos.X>-1.4</Pos.X>
+      <Pos.Y>1.05</Pos.Y>
+      <Pos.Z>0</Pos.Z>
+      <Rot.X>-90</Rot.X>
+      <Rot.Y>-90</Rot.Y>
+      <Rot.Z>0</Rot.Z>
+      <Size.X>2.8</Size.X><!-- Width -->
+      <Size.Y>0.01</Size.Y>
+      <Size.Z>2.1</Size.Z><!-- Height -->
+      <Display>2</Display>
+    </Surface>
+    <Surface>
+      <!-- Right Wall -->
+      <Pos.X>1.4</Pos.X>
+      <Pos.Y>1.05</Pos.Y>
+      <Pos.Z>0</Pos.Z>
+      <Rot.X>-90</Rot.X>
+      <Rot.Y>90</Rot.Y>
+      <Rot.Z>0</Rot.Z>
+      <Size.X>2.8</Size.X><!-- Width -->
+      <Size.Y>0.01</Size.Y>
+      <Size.Z>2.1</Size.Z><!-- Height -->
+      <Display>3</Display>
+    </Surface>
+    <Surface>
+      <!-- Floor -->
+      <Pos.X>0</Pos.X>
+      <Pos.Y>0</Pos.Y>
+      <Pos.Z>0</Pos.Z>
+      <Rot.X>0</Rot.X>
+      <Rot.Y>0</Rot.Y>
+      <Rot.Z>0</Rot.Z>
+      <Size.X>2.8</Size.X>
+      <Size.Y>0.01</Size.Y>
+      <Size.Z>2.8</Size.Z>
+      <Display>4</Display>
+    </Surface>
+  </Surfaces>
+</CAVE>

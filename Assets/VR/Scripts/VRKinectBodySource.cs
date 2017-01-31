@@ -1,0 +1,74 @@
+﻿using Windows.Kinect;
+using UnityEngine;
+
+namespace Assets.VR.Scripts
+{
+    public class VRKinectBodySource : MonoBehaviour
+    {
+        private KinectSensor _sensor;
+        private BodyFrameReader _reader;
+        private Body[] _data = null;
+        public Windows.Kinect.Vector4 Floor { get; private set; }
+
+        public Body[] GetData()
+        {
+            return _data;
+        }
+
+
+        void Start()
+        {
+            _sensor = KinectSensor.GetDefault();
+
+            if (_sensor != null)
+            {
+                _reader = _sensor.BodyFrameSource.OpenReader();
+
+                if (!_sensor.IsOpen)
+                {
+                    _sensor.Open();
+                }
+            }
+        }
+
+        void Update()
+        {
+            if (_reader != null)
+            {
+                //bool newData = false;
+                var frame = _reader.AcquireLatestFrame();
+                if (frame != null)
+                {
+                    if (_data == null)
+                    {
+                        _data = new Body[_sensor.BodyFrameSource.BodyCount];
+                    }
+                    frame.GetAndRefreshBodyData(_data);
+                    //newData = true;
+                    Floor = frame.FloorClipPlane;
+                    frame.Dispose();
+                    frame = null;
+                }
+            }
+        }
+
+        void OnApplicationQuit()
+        {
+            if (_reader != null)
+            {
+                _reader.Dispose();
+                _reader = null;
+            }
+
+            if (_sensor != null)
+            {
+                if (_sensor.IsOpen)
+                {
+                    _sensor.Close();
+                }
+
+                _sensor = null;
+            }
+        }
+    }
+}
