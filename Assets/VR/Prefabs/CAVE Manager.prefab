@@ -61,3 +61,4 @@ MonoBehaviour:
     type: 2}
   UserViewProjectorPrefab: {fileID: 1890889921151360, guid: 6c114be00ed3425429cb34259c36598a,
     type: 2}
+  ProjectorShader: {fileID: 4800000, guid: 01a668cc78047034a8a0c5ca2d24c6f7, type: 3}

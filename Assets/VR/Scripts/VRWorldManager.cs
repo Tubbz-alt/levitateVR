@@ -11,6 +11,7 @@ namespace Assets.VR.Scripts
         public GameObject SurfacePrefab;
         public Camera UserViewCameraPrefab;
         public GameObject UserViewProjectorPrefab;
+        public Shader ProjectorShader;
 
         private VRLoadCalibration _caveConfiguration = new VRLoadCalibration();
 
@@ -27,6 +28,8 @@ namespace Assets.VR.Scripts
 
         private GameObject _head;
         private int _numberProjectors;
+        private int _textureWidth = 1024;
+        private int _textureHeight = 1024;
 
         void Start()
         {
@@ -49,7 +52,7 @@ namespace Assets.VR.Scripts
             _numberProjectors = caveConfiguration.Projectors.Length;
 
             //Instatiate the Sensor:
-            _sensor = Instantiate(SensorPrefab, new Vector3(caveConfiguration.Sensors.Position.x, caveConfiguration.Sensors.Position.y, caveConfiguration.Sensors.Position.z), Quaternion.Euler(caveConfiguration.Sensors.Rotation.x, caveConfiguration.Sensors.Rotation.y, caveConfiguration.Sensors.Rotation.z), transform);
+            _sensor = Instantiate(SensorPrefab, new Vector3(caveConfiguration.Sensors.Position.x, caveConfiguration.Sensors.Position.y, caveConfiguration.Sensors.Position.z) + transform.position, Quaternion.Euler(caveConfiguration.Sensors.Rotation.x, caveConfiguration.Sensors.Rotation.y, caveConfiguration.Sensors.Rotation.z), transform);
             _sensor.gameObject.layer = _caveLayer;
 
             //Instantiate the Projectors:
@@ -57,7 +60,7 @@ namespace Assets.VR.Scripts
             _projectors = new Camera[caveConfiguration.Projectors.Length];
             foreach (var projector in caveConfiguration.Projectors)
             {
-                _projectors[index] = Instantiate(ProjectorPrefab, new Vector3(projector.Position.x, projector.Position.y, projector.Position.z), Quaternion.Euler(projector.Rotation.x, projector.Rotation.y, projector.Rotation.z), transform);
+                _projectors[index] = Instantiate(ProjectorPrefab, new Vector3(projector.Position.x, projector.Position.y, projector.Position.z) + transform.position, Quaternion.Euler(projector.Rotation.x, projector.Rotation.y, projector.Rotation.z), transform);
                 _projectors[index].fieldOfView = projector.FOV;
                 SetObliqueness(0, projector.Fy, _projectors[index]);
                 _projectors[index].gameObject.layer = _caveLayer;
@@ -72,7 +75,7 @@ namespace Assets.VR.Scripts
             _surfaces = new GameObject[caveConfiguration.Surfaces.Length];
             foreach (var surface in caveConfiguration.Surfaces)
             {
-                _surfaces[index] = Instantiate(SurfacePrefab, new Vector3(surface.Position.x, surface.Position.y, surface.Position.z), Quaternion.Euler(surface.Rotation.x, surface.Rotation.y, surface.Rotation.z), transform);
+                _surfaces[index] = Instantiate(SurfacePrefab, new Vector3(surface.Position.x, surface.Position.y, surface.Position.z) + transform.position, Quaternion.Euler(surface.Rotation.x, surface.Rotation.y, surface.Rotation.z), transform);
                 _surfaces[index].transform.localScale = new Vector3(surface.Size.x / 10, surface.Size.y / 10, surface.Size.z / 10);
                 _surfaces[index].layer = _caveLayer - surface.Display;
                 index++;
@@ -84,9 +87,10 @@ namespace Assets.VR.Scripts
             for (int i = 0; i < caveConfiguration.Projectors.Length; i++)
             {
                 index = i;
-                _userViewCameras[index] = Instantiate(UserViewCameraPrefab, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), transform);
+                _userViewCameras[index] = Instantiate(UserViewCameraPrefab, new Vector3(0, 0, 0) + transform.position, Quaternion.Euler(0, 0, 0), transform);
                 _userViewCameras[index].gameObject.layer = _caveLayer;
-                _userViewTextures[index] = new RenderTexture(1024, 1024, 24, RenderTextureFormat.ARGB32);
+                _userViewTextures[index] = new RenderTexture(_textureWidth, _textureHeight, 24, RenderTextureFormat.ARGB32);
+                _userViewTextures[index].antiAliasing = 2;
                 _userViewTextures[index].Create();
                 _userViewCameras[index].targetTexture = _userViewTextures[index];
                 //_userViewCameras[index].cullingMask = 1 << ();      //The user is set to only see the default layer. Change this culling mask if you want the camera to see different layers. 
@@ -98,10 +102,10 @@ namespace Assets.VR.Scripts
             for (int i = 0; i < caveConfiguration.Projectors.Length; i++)
             {
                 index = i;
-                _userViewProjectors[index] = Instantiate(UserViewProjectorPrefab, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), transform);
+                _userViewProjectors[index] = Instantiate(UserViewProjectorPrefab, new Vector3(0, 0, 0) + transform.position, Quaternion.Euler(0, 0, 0), transform);
                 _userViewProjectors[index].gameObject.layer = _caveLayer;
                 _userViewProjectors[index].GetComponent<Projector>().ignoreLayers &= ~(1 << _surfaces[index].layer);
-                _userViewMaterials[index] = new Material(Shader.Find("Projector/Multiply"));
+                _userViewMaterials[index] = new Material(ProjectorShader);
                 _userViewMaterials[index].SetTexture("_ShadowTex", _userViewTextures[index]);    //Sets the shader _ShadowTex property (shadow texture) as my render texture
                 _userViewProjectors[index].GetComponent<Projector>().material = _userViewMaterials[index];
             }
@@ -161,7 +165,7 @@ namespace Assets.VR.Scripts
             //HeadProjector.transform.Rotate(0, angleHorizontal / 2, 0);
 
             //HeadCamera.transform.rotation = HeadProjector.transform.rotation;
-            _userViewProjectors[index].transform.LookAt(_surfaces[index].transform, Vector3.forward);
+            _userViewProjectors[index].transform.LookAt(_surfaces[index].transform, Vector3.up);
             _userViewCameras[index].transform.rotation = _userViewProjectors[index].transform.rotation;
         }
 
