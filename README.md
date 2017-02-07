@@ -3,4 +3,4 @@ Neurofeedback demo for levitating a cube using EEG beta power (~12-25Hz) from ce
 
 This demo is making use of multiple setups: VR, CAVE and simple PC monitor.
 
-![levitateVR_menu.png](https://bitbucket.org/repo/bGB64n/images/3468067792-levitateVR_menu.png)
+![levitateVR_menu.png](http://i.imgur.com/UqdeFAo.png)
